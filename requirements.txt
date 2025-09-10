@@ -8,3 +8,4 @@ google-generativeai
 supabase
 httpx
 openpyxl
+pandas

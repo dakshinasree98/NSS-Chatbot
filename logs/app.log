@@ -36,3 +36,9 @@
 2025-09-11 02:03:50 | INFO     | main:lifespan:308 - Supabase Configuration: ✓ Set
 2025-09-11 02:03:51 | INFO     | main:get_gemini_client:83 - Gemini client initialized successfully
 2025-09-11 02:03:51 | INFO     | main:lifespan:315 - Gemini AI Configuration: ✓ Set
+2025-09-11 02:44:11 | INFO     | main:lifespan:304 - Starting FastAPI app on port 10000
+2025-09-11 02:44:11 | WARNING  | main:get_supabase_client:66 - Using anon key - ensure RLS policies allow inserts
+2025-09-11 02:44:12 | INFO     | main:lifespan:308 - Supabase Configuration: ✓ Set
+2025-09-11 02:44:12 | INFO     | main:get_gemini_client:83 - Gemini client initialized successfully
+2025-09-11 02:44:12 | INFO     | main:lifespan:315 - Gemini AI Configuration: ✓ Set
+2025-09-11 02:47:26 | INFO     | main:lifespan:322 - Application shutdown complete
