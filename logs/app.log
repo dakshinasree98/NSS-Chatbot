@@ -1,0 +1,38 @@
+2025-09-03 11:01:13 | INFO     | main:lifespan:244 - Starting FastAPI app on port 10000
+2025-09-03 11:01:13 | ERROR    | main:get_supabase_client:53 - SUPABASE_URL and SUPABASE_SERVICE_KEY (or SUPABASE_ANON_KEY) must be set
+2025-09-03 11:01:13 | ERROR    | main:lifespan:250 - Supabase connection failed: Missing Supabase configuration
+2025-09-03 11:01:14 | INFO     | main:get_gemini_client:76 - Gemini client initialized successfully
+2025-09-03 11:01:14 | INFO     | main:lifespan:255 - Gemini AI Configuration: ✓ Set
+2025-09-03 11:01:14 | INFO     | main:lifespan:262 - Application shutdown complete
+2025-09-03 11:01:43 | INFO     | main:lifespan:244 - Starting FastAPI app on port 10000
+2025-09-03 11:01:43 | ERROR    | main:get_supabase_client:53 - SUPABASE_URL and SUPABASE_SERVICE_KEY (or SUPABASE_ANON_KEY) must be set
+2025-09-03 11:01:43 | ERROR    | main:lifespan:250 - Supabase connection failed: Missing Supabase configuration
+2025-09-03 11:01:44 | INFO     | main:get_gemini_client:76 - Gemini client initialized successfully
+2025-09-03 11:01:44 | INFO     | main:lifespan:255 - Gemini AI Configuration: ✓ Set
+2025-09-03 11:01:44 | INFO     | main:lifespan:262 - Application shutdown complete
+2025-09-11 00:54:00 | INFO     | main:lifespan:304 - Starting FastAPI app on port 10000
+2025-09-11 00:54:00 | ERROR    | main:get_supabase_client:60 - SUPABASE_URL and SUPABASE_SERVICE_KEY (or SUPABASE_ANON_KEY) must be set
+2025-09-11 00:54:00 | ERROR    | main:lifespan:310 - Supabase connection failed: Missing Supabase configuration
+2025-09-11 00:54:01 | INFO     | main:get_gemini_client:83 - Gemini client initialized successfully
+2025-09-11 00:54:01 | INFO     | main:lifespan:315 - Gemini AI Configuration: ✓ Set
+2025-09-11 00:54:40 | INFO     | main:lifespan:304 - Starting FastAPI app on port 10000
+2025-09-11 00:54:40 | ERROR    | main:get_supabase_client:60 - SUPABASE_URL and SUPABASE_SERVICE_KEY (or SUPABASE_ANON_KEY) must be set
+2025-09-11 00:54:40 | ERROR    | main:lifespan:310 - Supabase connection failed: Missing Supabase configuration
+2025-09-11 00:54:41 | INFO     | main:get_gemini_client:83 - Gemini client initialized successfully
+2025-09-11 00:54:41 | INFO     | main:lifespan:315 - Gemini AI Configuration: ✓ Set
+2025-09-11 01:52:58 | INFO     | main:lifespan:304 - Starting FastAPI app on port 10000
+2025-09-11 01:52:58 | ERROR    | main:get_supabase_client:60 - SUPABASE_URL and SUPABASE_SERVICE_KEY (or SUPABASE_ANON_KEY) must be set
+2025-09-11 01:52:58 | ERROR    | main:lifespan:310 - Supabase connection failed: Missing Supabase configuration
+2025-09-11 01:52:59 | INFO     | main:get_gemini_client:83 - Gemini client initialized successfully
+2025-09-11 01:52:59 | INFO     | main:lifespan:315 - Gemini AI Configuration: ✓ Set
+2025-09-11 01:54:10 | INFO     | main:lifespan:304 - Starting FastAPI app on port 10000
+2025-09-11 01:54:10 | WARNING  | main:get_supabase_client:66 - Using anon key - ensure RLS policies allow inserts
+2025-09-11 01:54:10 | INFO     | main:lifespan:308 - Supabase Configuration: ✓ Set
+2025-09-11 01:54:11 | INFO     | main:get_gemini_client:83 - Gemini client initialized successfully
+2025-09-11 01:54:11 | INFO     | main:lifespan:315 - Gemini AI Configuration: ✓ Set
+2025-09-11 02:03:44 | INFO     | main:lifespan:322 - Application shutdown complete
+2025-09-11 02:03:50 | INFO     | main:lifespan:304 - Starting FastAPI app on port 10000
+2025-09-11 02:03:50 | WARNING  | main:get_supabase_client:66 - Using anon key - ensure RLS policies allow inserts
+2025-09-11 02:03:50 | INFO     | main:lifespan:308 - Supabase Configuration: ✓ Set
+2025-09-11 02:03:51 | INFO     | main:get_gemini_client:83 - Gemini client initialized successfully
+2025-09-11 02:03:51 | INFO     | main:lifespan:315 - Gemini AI Configuration: ✓ Set
