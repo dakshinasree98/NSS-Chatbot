@@ -436,18 +436,18 @@ async def log_to_supabase(log_data: dict, table: str = "message_logs"):
 # ----------------------------
 # /message Forward to system 2 for testing
 # ----------------------------
-async def forward_message_to_replica(payload: dict):
-    """Forward message payload to external replica service"""
-    replica_url = "https://nss-code-replica.onrender.com/message"
-    try:
-        # Serialize datetime objects before sending
-        safe_payload = serialize_datetime_recursive(payload)
+# async def forward_message_to_replica(payload: dict):
+#     """Forward message payload to external replica service"""
+#     # replica_url = "https://nss-code-replica.onrender.com/message"
+#     try:
+#         # Serialize datetime objects before sending
+#         safe_payload = serialize_datetime_recursive(payload)
  
-        async with httpx.AsyncClient(timeout=10) as client:
-            response = await client.post(replica_url, json=safe_payload)
-            logger.info(f"Forwarded message to replica. Status: {response.status_code}")
-    except Exception as e:
-        logger.error(f"Failed to forward message to replica: {e}")
+#         async with httpx.AsyncClient(timeout=10) as client:
+#             response = await client.post(replica_url, json=safe_payload)
+#             logger.info(f"Forwarded message to replica. Status: {response.status_code}")
+#     except Exception as e:
+#         logger.error(f"Failed to forward message to replica: {e}")
  
 # ----------------------------
 # /message endpoint with AI classification
@@ -458,7 +458,7 @@ async def handle_message(request: MessageRequest):
     start_time = datetime.now()
     phone_number = request.MobileNo or request.WA_Msg_To or "Unknown"
     payload = request.model_dump(exclude_none=True)
-    asyncio.create_task(forward_message_to_replica(payload))
+    # asyncio.create_task(forward_message_to_replica(payload))
     
     log_data = {
         "request_id": request_id,
@@ -557,6 +557,47 @@ async def handle_message(request: MessageRequest):
             response_data["WA_Auto_Id"] = request.WA_Auto_Id
         if request.WA_Message_Id is not None:
             response_data["WA_Message_Id"] = request.WA_Message_Id
+
+        # --- Route to correct handler based on classification ---
+        if classification_result["classification"].upper() == "GREETING RELATED TEXT":
+            response = await handle_greeting(
+                message_text=request.WA_Msg_Text or "",
+                user_name=request.Wa_Name or request.Donor_Name or "Sevak",
+                classification_result={
+                    "Classification": classification_result["classification"],
+                    "Sub_Classification": classification_result.get("sub_classification", "Greeting")
+                },
+                phone_number=phone_number
+            )
+            return response
+
+        elif classification_result["classification"].upper() == "DONATION & TICKET RELATED ENQUIRIES":
+            response = await handle_donations(
+                message_text=request.WA_Msg_Text or "",
+                classification_result={
+                    "Classification": classification_result["classification"],
+                    "Sub_Classification": classification_result.get("sub_classification", "")
+                },
+                phone_number=phone_number
+            )
+            return response
+
+        elif classification_result["classification"].upper() in [
+            "GENERAL INFORMATION ENQUIRIES",
+            "MEDICAL / TREATMENT ENQUIRIES",
+            "EDUCATION & TRAINING ENQUIRIES",
+            "OPERATIONAL / CALL HANDLING ENQUIRIES",
+        ]:
+            response = await handle_faq(
+                message_text=request.WA_Msg_Text or "",
+                classification_result={
+                    "Classification": classification_result["classification"],
+                    "Sub_Classification": classification_result.get("sub_classification", "")
+                },
+                phone_number=phone_number
+            )
+            return response
+
 
         end_time = datetime.now()
         duration_ms = int((end_time - start_time).total_seconds() * 1000)
