@@ -74,3 +74,4 @@
 2025-09-11 13:56:43 | INFO     | main:lifespan:308 - Supabase Configuration: ✓ Set
 2025-09-11 13:56:44 | INFO     | main:get_gemini_client:83 - Gemini client initialized successfully
 2025-09-11 13:56:44 | INFO     | main:lifespan:315 - Gemini AI Configuration: ✓ Set
+2025-09-11 14:13:30 | INFO     | main:lifespan:322 - Application shutdown complete
