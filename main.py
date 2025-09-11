@@ -115,7 +115,7 @@ async def analyze_image_with_gemini(image_url: str, gemini_client) -> dict:
         
         # Send to Gemini
         response = gemini_client.models.generate_content(
-            model="gemini-2.0-flash",
+            model="gemini-2.5-flash-lite",
             contents=[
                 "Explain what is in this image clearly and in detail.",
                 image_part
