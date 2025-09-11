@@ -69,3 +69,8 @@
 2025-09-11 10:47:50 | INFO     | main:classify_message_with_gemini:277 - Message classified as: GREETING RELATED TEXT with confidence: HIGH
 2025-09-11 10:47:50 | INFO     | main:handle_message:579 - Request 7abab53f-1a07-4ebf-b323-97de5d9a9ec1 processed successfully in 2946ms. Classification: GREETING RELATED TEXT
 2025-09-11 10:47:55 | INFO     | main:forward_message_to_replica:448 - Forwarded message to replica. Status: 200
+2025-09-11 13:56:43 | INFO     | main:lifespan:304 - Starting FastAPI app on port 10000
+2025-09-11 13:56:43 | WARNING  | main:get_supabase_client:66 - Using anon key - ensure RLS policies allow inserts
+2025-09-11 13:56:43 | INFO     | main:lifespan:308 - Supabase Configuration: ✓ Set
+2025-09-11 13:56:44 | INFO     | main:get_gemini_client:83 - Gemini client initialized successfully
+2025-09-11 13:56:44 | INFO     | main:lifespan:315 - Gemini AI Configuration: ✓ Set
