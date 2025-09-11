@@ -396,8 +396,8 @@ class MessageResponse(BaseModel):
     phone_number: str
     ai_response: str
     ai_reason: str
-    WA_Auto_Id: Optional[int]
-    WA_Message_Id: Optional[str]
+    WA_Auto_Id: Optional[int] = None
+    WA_Message_Id: Optional[str] = None
 
 class HealthResponse(BaseModel):
     status: str
