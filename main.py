@@ -547,20 +547,10 @@ async def handle_message(request: MessageRequest):
             "ai_reasoning": classification_result["reasoning"]
         })
 
-        response_data = {
-            "phone_number": phone_number,
-            "ai_response": "Not Answerable",
-            "ai_reason": classification_result["classification"]
-        }
-        
-        if request.WA_Auto_Id is not None:
-            response_data["WA_Auto_Id"] = request.WA_Auto_Id
-        if request.WA_Message_Id is not None:
-            response_data["WA_Message_Id"] = request.WA_Message_Id
 
         # --- Route to correct handler based on classification ---
         if classification_result["classification"].upper() == "GREETING RELATED TEXT":
-            response = await handle_greeting(
+            response_data = await handle_greeting(
                 message_text=request.WA_Msg_Text or "",
                 user_name=request.Wa_Name or request.Donor_Name or "Sevak",
                 classification_result={
@@ -569,10 +559,9 @@ async def handle_message(request: MessageRequest):
                 },
                 phone_number=phone_number
             )
-            return response
 
         elif classification_result["classification"].upper() == "DONATION & TICKET RELATED ENQUIRIES":
-            response = await handle_donations(
+            response_data = await handle_donations(
                 message_text=request.WA_Msg_Text or "",
                 classification_result={
                     "Classification": classification_result["classification"],
@@ -580,7 +569,6 @@ async def handle_message(request: MessageRequest):
                 },
                 phone_number=phone_number
             )
-            return response
 
         elif classification_result["classification"].upper() in [
             "GENERAL INFORMATION ENQUIRIES",
@@ -588,7 +576,7 @@ async def handle_message(request: MessageRequest):
             "EDUCATION & TRAINING ENQUIRIES",
             "OPERATIONAL / CALL HANDLING ENQUIRIES",
         ]:
-            response = await handle_faq(
+            response_data = await handle_faq(
                 message_text=request.WA_Msg_Text or "",
                 classification_result={
                     "Classification": classification_result["classification"],
@@ -596,8 +584,21 @@ async def handle_message(request: MessageRequest):
                 },
                 phone_number=phone_number
             )
-            return response
+        
+        else:
+            response_data = {
+            "phone_number": phone_number,
+            "ai_response": "Sorry, I couldn’t understand that.",
+            "ai_reason": classification_result["classification"],
+            "ai_classification": classification_result["classification"],
+            "ai_sub_classification": classification_result.get("sub_classification", "")
+        }
 
+        # Always include WA IDs if present
+        if request.WA_Auto_Id is not None:
+            response_data["WA_Auto_Id"] = request.WA_Auto_Id
+        if request.WA_Message_Id is not None:
+            response_data["WA_Message_Id"] = request.WA_Message_Id
 
         end_time = datetime.now()
         duration_ms = int((end_time - start_time).total_seconds() * 1000)
