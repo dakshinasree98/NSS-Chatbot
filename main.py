@@ -115,7 +115,7 @@ async def analyze_image_with_gemini(image_url: str, gemini_client) -> dict:
         
         # Send to Gemini
         response = gemini_client.models.generate_content(
-            model="gemini-2.5-flash-lite",
+            model="gemini-2.5-flash",
             contents=[
                 "Explain what is in this image clearly and in detail.",
                 image_part
@@ -436,18 +436,18 @@ async def log_to_supabase(log_data: dict, table: str = "message_logs"):
 # ----------------------------
 # /message Forward to system 2 for testing
 # ----------------------------
-# async def forward_message_to_replica(payload: dict):
-#     """Forward message payload to external replica service"""
-#     # replica_url = "https://nss-code-replica.onrender.com/message"
-#     try:
-#         # Serialize datetime objects before sending
-#         safe_payload = serialize_datetime_recursive(payload)
+async def forward_message_to_replica(payload: dict):
+    """Forward message payload to external replica service"""
+    replica_url = "https://fastapi-bot-rosu.onrender.com/message"
+    try:
+        # Serialize datetime objects before sending
+        safe_payload = serialize_datetime_recursive(payload)
  
-#         async with httpx.AsyncClient(timeout=10) as client:
-#             response = await client.post(replica_url, json=safe_payload)
-#             logger.info(f"Forwarded message to replica. Status: {response.status_code}")
-#     except Exception as e:
-#         logger.error(f"Failed to forward message to replica: {e}")
+        async with httpx.AsyncClient(timeout=10) as client:
+            response = await client.post(replica_url, json=safe_payload)
+            logger.info(f"Forwarded message to replica. Status: {response.status_code}")
+    except Exception as e:
+        logger.error(f"Failed to forward message to replica: {e}")
  
 # ----------------------------
 # /message endpoint with AI classification
@@ -499,36 +499,52 @@ async def handle_message(request: MessageRequest):
         
         transcription = None
         
-        # Check if message type is image and process it
+        # --- Handle Images (Skip Gemini) ---
         if request.WA_Msg_Type and request.WA_Msg_Type.lower() == "image" and request.WA_Url:
-            logger.info(f"Processing image message from {phone_number}")
-            
-            # Analyze image and get transcription
-            image_analysis = await analyze_image_with_gemini(request.WA_Url, gemini_client)
-            
-            if image_analysis["status"] == "success":
-                transcription = image_analysis["transcription"]
-                log_data["transcription"] = transcription
-                
-                # Classify the transcription instead of the original message text
-                if transcription and gemini_client:
-                    logger.info(f"Classifying image transcription: {transcription[:100]}...")
-                    classification_result = classify_message_with_gemini(transcription, gemini_client)
-                else:
-                    classification_result = {
-                        "classification": "GENERAL INFORMATION ENQUIRIES",
-                        "confidence": "LOW",
-                        "reasoning": "Image transcription unavailable"
-                    }
-            else:
-                logger.error(f"Image analysis failed: {image_analysis['error']}")
-                log_data["transcription"] = f"Error: {image_analysis['error']}"
-                classification_result = {
-                    "classification": "GENERAL INFORMATION ENQUIRIES",
-                    "confidence": "LOW",
-                    "reasoning": f"Image analysis failed: {image_analysis['error']}"
-                }
+            logger.info(f"Received an image message from {phone_number}, skipping Gemini.")
         
+            # Do NOT call analyze_image_with_gemini
+            classification_result = {
+                "classification": "GENERAL INFORMATION ENQUIRIES",
+                "confidence": "LOW",
+                "reasoning": "Image skipped – not classified by Gemini to save tokens"
+            }
+
+            # Just store a note in logs
+            log_data["transcription"] = "Image message skipped (no Gemini call)"
+
+
+        # # Check if message type is image and process it
+        # if request.WA_Msg_Type and request.WA_Msg_Type.lower() == "image" and request.WA_Url:
+        #     logger.info(f"Processing image message from {phone_number}")
+            
+        #     # Analyze image and get transcription
+        #     image_analysis = await analyze_image_with_gemini(request.WA_Url, gemini_client)
+            
+        #     if image_analysis["status"] == "success":
+        #         transcription = image_analysis["transcription"]
+        #         log_data["transcription"] = transcription
+                
+        #         # Classify the transcription instead of the original message text
+        #         if transcription and gemini_client:
+        #             logger.info(f"Classifying image transcription: {transcription[:100]}...")
+        #             classification_result = classify_message_with_gemini(transcription, gemini_client)
+        #         else:
+        #             classification_result = {
+        #                 "classification": "GENERAL INFORMATION ENQUIRIES",
+        #                 "confidence": "LOW",
+        #                 "reasoning": "Image transcription unavailable"
+        #             }
+        #     else:
+        #         logger.error(f"Image analysis failed: {image_analysis['error']}")
+        #         log_data["transcription"] = f"Error: {image_analysis['error']}"
+        #         classification_result = {
+        #             "classification": "GENERAL INFORMATION ENQUIRIES",
+        #             "confidence": "LOW",
+        #             "reasoning": f"Image analysis failed: {image_analysis['error']}"
+        #         }
+        
+
         # Process text messages (existing logic)
         elif request.WA_Msg_Text and gemini_client:
             logger.info(f"Classifying text message: {request.WA_Msg_Text[:100]}...")
