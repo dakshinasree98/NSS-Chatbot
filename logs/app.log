@@ -328,3 +328,4 @@
 2025-09-19 11:02:39 | INFO     | main:handle_message:946 - Classifying message: i want to donate rs.5000...
 2025-09-19 11:02:46 | INFO     | main:classify_message_with_gemini:686 - Message classified as: Donation Related Enquiries|Announce Related | Lang: en:Latin | Conf: HIGH
 2025-09-19 11:02:46 | INFO     | main:handle_message:1041 - Request 8f991303-92ba-4cf4-8175-5239072aabd5 processed in 9652ms.
+2025-09-19 14:33:24 | INFO     | main:lifespan:725 - Application shutdown complete

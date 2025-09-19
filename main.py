@@ -71,6 +71,7 @@ def get_supabase_client() -> Client:
     
     return create_client(url, key)
 
+
 # ----------------------------
 # Gemini AI Classification Setup
 # ----------------------------
@@ -1360,3 +1361,56 @@ async def handle_greeting(
         "ai_classification": ai_classification,
         "ai_sub_classification": ai_sub_classification,
     }
+
+
+async def process_messages():
+    """
+    Fetch all messages where ai_response = 'Not Answerable', re-run classification + response using existing pipeline, and update Supabase with new results.
+    """
+
+    try:
+        # 1. Fetch unprocessed messages
+        response = supabase.table("message_logs") \
+            .select("id, wa_msg_text, phone_number, WA_Message_Id") \
+            .is_("ai_response", None) \
+            .execute()
+
+        messages_data = response.data
+
+        if not messages_data:
+            print("✅ No messages to process.")
+            return
+
+        print(f"🔄 Found {len(messages_data)} messages to process...")
+
+        # 2. Loop through each message
+        for msg in messages_data:
+            msg_id = msg["id"]
+            user_text = msg["wa_msg_text"]
+            phone_number = msg["phone_number"]
+            wa_msg_id = msg["WA_Message_Id"]
+
+            # 🔑 Use your existing pipeline function for classification + response
+            # If you already have a function like handle_user_message, reuse it here
+            response_data = await handle_message(
+                phone_number=phone_number,
+                user_message=user_text,
+                wa_msg_id=wa_msg_id
+            )
+
+            # 3. Update back into Supabase
+            supabase.table("message_logs") \
+                .update({
+                    "ai_response": response_data.get("ai_response"),
+                    "ai_classification": response_data.get("ai_classification"),
+                    "ai_reason": response_data.get("ai_reason"),
+                }) \
+                .eq("id", msg_id) \
+                .execute()
+
+            print(f"✅ Processed message ID {msg_id}")
+
+        print("🎉 Finished processing messages.")
+
+    except Exception as e:
+        print(f"❌ Error in process_messages: {e}")
