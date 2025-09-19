@@ -148,3 +148,174 @@
 2025-09-12 15:10:37 | INFO     | main:lifespan:308 - Supabase Configuration: ✓ Set
 2025-09-12 15:10:38 | INFO     | main:get_gemini_client:83 - Gemini client initialized successfully
 2025-09-12 15:10:38 | INFO     | main:lifespan:315 - Gemini AI Configuration: ✓ Set
+2025-09-18 03:25:31 | INFO     | main:lifespan:301 - Starting FastAPI app on port 10000
+2025-09-18 03:25:31 | WARNING  | main:get_supabase_client:66 - Using anon key - ensure RLS policies allow inserts
+2025-09-18 03:25:32 | INFO     | main:lifespan:305 - Supabase Configuration: ✓ Set
+2025-09-18 03:25:32 | INFO     | main:get_gemini_client:83 - Gemini client initialized successfully
+2025-09-18 03:25:32 | INFO     | main:lifespan:312 - Gemini AI Configuration: ✓ Set
+2025-09-18 04:25:13 | ERROR    | main:handle_message:754 - Request d429ea04-5eb3-47a4-befc-c093fbdf0c34 failed after 9ms: name 'classify_message_completeness' is not defined
+2025-09-18 04:25:16 | ERROR    | main:log_to_supabase:511 - Supabase log failed: {'message': "Could not find the 'ai_sub_classification' column of 'message_logs' in the schema cache", 'code': 'PGRST204', 'hint': None, 'details': None}
+2025-09-18 04:25:16 | ERROR    | main:log_to_supabase:513 - Failed to log data with 36 fields
+2025-09-18 04:32:27 | INFO     | main:lifespan:319 - Application shutdown complete
+2025-09-18 09:50:30 | INFO     | main:lifespan:301 - Starting FastAPI app on port 10000
+2025-09-18 09:50:30 | WARNING  | main:get_supabase_client:66 - Using anon key - ensure RLS policies allow inserts
+2025-09-18 09:50:31 | INFO     | main:lifespan:305 - Supabase Configuration: ✓ Set
+2025-09-18 09:50:32 | INFO     | main:get_gemini_client:83 - Gemini client initialized successfully
+2025-09-18 09:50:32 | INFO     | main:lifespan:312 - Gemini AI Configuration: ✓ Set
+2025-09-18 09:50:39 | ERROR    | main:classify_message_completeness:1169 - Gemini API error during completeness check: 'Client' object has no attribute 'generate_content_async'
+2025-09-18 09:50:39 | INFO     | main:handle_message:622 - Classifying message: Hello, I want to donate....
+2025-09-18 09:51:04 | INFO     | main:classify_message_with_gemini:272 - Message classified as: DONATION & TICKET RELATED ENQUIRIES with confidence: HIGH
+2025-09-18 09:51:04 | INFO     | main:handle_message:731 - Request 1646fddd-8658-4e9c-afb8-63ea913e7490 processed successfully in 24357ms. Classification: DONATION & TICKET RELATED ENQUIRIES -> Donation Inquiry | Handler: Default Fallback
+2025-09-18 09:51:06 | ERROR    | main:log_to_supabase:511 - Supabase log failed: {'message': "Could not find the 'ai_sub_classification' column of 'message_logs' in the schema cache", 'code': 'PGRST204', 'hint': None, 'details': None}
+2025-09-18 09:51:06 | ERROR    | main:log_to_supabase:513 - Failed to log data with 41 fields
+2025-09-19 03:48:22 | INFO     | main:lifespan:319 - Application shutdown complete
+2025-09-19 03:53:10 | INFO     | main:lifespan:689 - Starting FastAPI app on port 10000
+2025-09-19 03:53:10 | WARNING  | main:get_supabase_client:68 - Using anon key - ensure RLS policies allow inserts
+2025-09-19 03:53:10 | INFO     | main:lifespan:693 - Supabase Configuration: ✓ Set
+2025-09-19 03:53:10 | INFO     | main:get_gemini_model:86 - Gemini model initialized successfully
+2025-09-19 03:53:10 | INFO     | main:lifespan:701 - Gemini AI Configuration: ✓ Set
+2025-09-19 03:53:43 | INFO     | main:classify_message_completeness:1259 - Message completeness check: full - The message begins with a complete greeting and follows with a grammatically complete statement of intent. It is fully understandable as a standalone declaration.
+2025-09-19 03:53:43 | INFO     | main:handle_message:935 - Classifying message: Hello, I want to donate....
+2025-09-19 03:53:43 | ERROR    | main:classify_message_with_gemini:674 - Gemini classification error: 'coroutine' object has no attribute 'text'
+2025-09-19 03:53:43 | ERROR    | main:handle_message:1088 - Request 86f5f23f-6043-4f5a-8318-3848514ba190 failed after 10419ms: name 'handle_faq' is not defined
+2025-09-19 03:53:44 | ERROR    | main:log_to_supabase:825 - Supabase log failed: {'message': "Could not find the 'ai_sub_classification' column of 'message_logs' in the schema cache", 'code': 'PGRST204', 'hint': None, 'details': None}
+2025-09-19 03:53:44 | ERROR    | main:log_to_supabase:827 - Failed to log data with 39 fields
+2025-09-19 04:29:12 | INFO     | main:classify_message_completeness:1259 - Message completeness check: full - This is a complete devotional greeting or salutation, similar to 'Hello' or 'Jai Shri Krishna', and stands alone as a complete thought.
+2025-09-19 04:29:12 | INFO     | main:handle_message:935 - Classifying message: Radhe radhee...
+2025-09-19 04:29:12 | ERROR    | main:classify_message_with_gemini:674 - Gemini classification error: 'coroutine' object has no attribute 'text'
+2025-09-19 04:29:12 | ERROR    | main:handle_message:1088 - Request 7f39ff20-6771-461d-9c83-8dcc93aa5237 failed after 2926ms: name 'handle_faq' is not defined
+2025-09-19 04:29:13 | ERROR    | main:log_to_supabase:825 - Supabase log failed: {'message': "Could not find the 'ai_sub_classification' column of 'message_logs' in the schema cache", 'code': 'PGRST204', 'hint': None, 'details': None}
+2025-09-19 04:29:13 | ERROR    | main:log_to_supabase:827 - Failed to log data with 39 fields
+2025-09-19 04:30:18 | INFO     | main:lifespan:709 - Application shutdown complete
+2025-09-19 04:30:24 | INFO     | main:lifespan:689 - Starting FastAPI app on port 10000
+2025-09-19 04:30:24 | WARNING  | main:get_supabase_client:68 - Using anon key - ensure RLS policies allow inserts
+2025-09-19 04:30:25 | INFO     | main:lifespan:693 - Supabase Configuration: ✓ Set
+2025-09-19 04:30:25 | INFO     | main:get_gemini_model:86 - Gemini model initialized successfully
+2025-09-19 04:30:25 | INFO     | main:lifespan:701 - Gemini AI Configuration: ✓ Set
+2025-09-19 04:30:32 | INFO     | main:classify_message_completeness:1259 - Message completeness check: full - This is a complete devotional greeting or salutation, widely understood as a standalone phrase in its cultural context.
+2025-09-19 04:30:32 | INFO     | main:handle_message:935 - Classifying message: Radhe radhee...
+2025-09-19 04:30:32 | ERROR    | main:handle_message:1088 - Request a35d7c10-555e-4dc9-88b4-cd1b115a12ae failed after 3406ms: 'coroutine' object has no attribute 'get'
+2025-09-19 04:30:33 | ERROR    | main:log_to_supabase:825 - Supabase log failed: {'message': "Could not find the 'ai_sub_classification' column of 'message_logs' in the schema cache", 'code': 'PGRST204', 'hint': None, 'details': None}
+2025-09-19 04:30:33 | ERROR    | main:log_to_supabase:827 - Failed to log data with 36 fields
+2025-09-19 04:36:05 | INFO     | main:lifespan:709 - Application shutdown complete
+2025-09-19 04:36:11 | INFO     | main:lifespan:689 - Starting FastAPI app on port 10000
+2025-09-19 04:36:11 | WARNING  | main:get_supabase_client:68 - Using anon key - ensure RLS policies allow inserts
+2025-09-19 04:36:11 | INFO     | main:lifespan:693 - Supabase Configuration: ✓ Set
+2025-09-19 04:36:11 | INFO     | main:get_gemini_model:86 - Gemini model initialized successfully
+2025-09-19 04:36:11 | INFO     | main:lifespan:701 - Gemini AI Configuration: ✓ Set
+2025-09-19 04:36:17 | INFO     | main:classify_message_completeness:1255 - Message completeness check: full - This is a complete devotional salutation or greeting, functioning as a standalone expression.
+2025-09-19 04:36:17 | INFO     | main:handle_message:934 - Classifying message: Radhe radhee...
+2025-09-19 04:36:17 | ERROR    | main:handle_message:1084 - Request 6dcb33bf-db7a-48b8-b9eb-df6888a30159 failed after 3076ms: 'coroutine' object has no attribute 'get'
+2025-09-19 04:36:18 | ERROR    | main:log_to_supabase:825 - Supabase log failed: {'message': "Could not find the 'consolidated_message_used' column of 'message_logs' in the schema cache", 'code': 'PGRST204', 'hint': None, 'details': None}
+2025-09-19 04:36:18 | ERROR    | main:log_to_supabase:827 - Failed to log data with 35 fields
+2025-09-19 09:47:09 | INFO     | main:lifespan:709 - Application shutdown complete
+2025-09-19 09:47:21 | INFO     | main:lifespan:703 - Starting FastAPI app on port 10000
+2025-09-19 09:47:21 | WARNING  | main:get_supabase_client:70 - Using anon key - ensure RLS policies allow inserts
+2025-09-19 09:47:21 | INFO     | main:lifespan:707 - Supabase Configuration: ✓ Set
+2025-09-19 09:47:21 | INFO     | main:get_gemini_model:88 - Gemini model initialized successfully
+2025-09-19 09:47:21 | INFO     | main:lifespan:715 - Gemini AI Configuration: ✓ Set
+2025-09-19 09:47:47 | INFO     | main:classify_message_completeness:1233 - Message completeness check: full - This is a complete devotional greeting or chant, similar to 'Hello' or 'Namaste', and stands on its own.
+2025-09-19 09:47:47 | INFO     | main:handle_message:946 - Classifying message: Radhe radhee...
+2025-09-19 09:47:47 | ERROR    | main:handle_message:1063 - Request 073731c7-6f54-4c59-a1e4-fb4dfe41bf7a failed after 3065ms: 'coroutine' object has no attribute 'get'
+2025-09-19 09:47:49 | ERROR    | main:log_to_supabase:839 - Supabase log failed: {'message': "Could not find the 'is_partial_message' column of 'message_logs' in the schema cache", 'code': 'PGRST204', 'hint': None, 'details': None}
+2025-09-19 09:47:49 | ERROR    | main:log_to_supabase:841 - Failed to log data with 34 fields
+2025-09-19 09:48:44 | INFO     | main:lifespan:723 - Application shutdown complete
+2025-09-19 09:48:51 | INFO     | main:lifespan:703 - Starting FastAPI app on port 10000
+2025-09-19 09:48:51 | WARNING  | main:get_supabase_client:70 - Using anon key - ensure RLS policies allow inserts
+2025-09-19 09:48:52 | INFO     | main:lifespan:707 - Supabase Configuration: ✓ Set
+2025-09-19 09:48:52 | INFO     | main:get_gemini_model:88 - Gemini model initialized successfully
+2025-09-19 09:48:52 | INFO     | main:lifespan:715 - Gemini AI Configuration: ✓ Set
+2025-09-19 09:48:59 | INFO     | main:classify_message_completeness:1231 - Message completeness check: full - This is a complete devotional greeting or salutation, similar to 'Hello' or 'Namaste', and stands on its own.
+2025-09-19 09:48:59 | INFO     | main:handle_message:944 - Classifying message: Radhe radhee...
+2025-09-19 09:48:59 | ERROR    | main:handle_message:1061 - Request 5e5abe35-91aa-4430-88fc-ff69c44ea97a failed after 3284ms: 'coroutine' object has no attribute 'get'
+2025-09-19 10:00:27 | INFO     | main:lifespan:723 - Application shutdown complete
+2025-09-19 10:00:36 | INFO     | main:lifespan:703 - Starting FastAPI app on port 10000
+2025-09-19 10:00:36 | WARNING  | main:get_supabase_client:70 - Using anon key - ensure RLS policies allow inserts
+2025-09-19 10:00:36 | INFO     | main:lifespan:707 - Supabase Configuration: ✓ Set
+2025-09-19 10:00:36 | INFO     | main:get_gemini_model:88 - Gemini model initialized successfully
+2025-09-19 10:00:36 | INFO     | main:lifespan:715 - Gemini AI Configuration: ✓ Set
+2025-09-19 10:00:47 | INFO     | main:classify_message_completeness:1231 - Message completeness check: full - This is a complete greeting or salutation, similar to saying 'Hello', and stands alone as a full thought.
+2025-09-19 10:00:47 | INFO     | main:handle_message:944 - Classifying message: Radhe radhee...
+2025-09-19 10:00:51 | INFO     | main:classify_message_with_gemini:684 - Message classified as: General | Lang: hi:Latin | Conf: HIGH
+2025-09-19 10:00:53 | ERROR    | main:log_to_supabase:839 - Supabase log failed: {'message': "Could not find the 'handler_used' column of 'message_logs' in the schema cache", 'code': 'PGRST204', 'hint': None, 'details': None}
+2025-09-19 10:00:53 | ERROR    | main:log_to_supabase:841 - Failed to log data with 35 fields
+2025-09-19 10:05:46 | INFO     | main:lifespan:723 - Application shutdown complete
+2025-09-19 10:05:59 | INFO     | main:lifespan:703 - Starting FastAPI app on port 10000
+2025-09-19 10:05:59 | WARNING  | main:get_supabase_client:70 - Using anon key - ensure RLS policies allow inserts
+2025-09-19 10:06:00 | INFO     | main:lifespan:707 - Supabase Configuration: ✓ Set
+2025-09-19 10:06:00 | INFO     | main:get_gemini_model:88 - Gemini model initialized successfully
+2025-09-19 10:06:00 | INFO     | main:lifespan:715 - Gemini AI Configuration: ✓ Set
+2025-09-19 10:06:09 | INFO     | main:classify_message_completeness:1229 - Message completeness check: full - This is a complete religious greeting or salutation, similar to 'Hello' or 'Namaste'.
+2025-09-19 10:06:09 | INFO     | main:handle_message:944 - Classifying message: Radhe radhee...
+2025-09-19 10:06:13 | INFO     | main:classify_message_with_gemini:684 - Message classified as: General | Lang: hi:Latin | Conf: HIGH
+2025-09-19 10:20:21 | INFO     | main:lifespan:723 - Application shutdown complete
+2025-09-19 10:20:30 | INFO     | main:lifespan:713 - Starting FastAPI app on port 10000
+2025-09-19 10:20:30 | WARNING  | main:get_supabase_client:70 - Using anon key - ensure RLS policies allow inserts
+2025-09-19 10:20:30 | INFO     | main:lifespan:717 - Supabase Configuration: ✓ Set
+2025-09-19 10:20:30 | INFO     | main:get_gemini_model:88 - Gemini model initialized successfully
+2025-09-19 10:20:30 | INFO     | main:lifespan:725 - Gemini AI Configuration: ✓ Set
+2025-09-19 10:20:36 | INFO     | main:classify_message_completeness:1239 - Message completeness check: full - This is a complete devotional greeting or salutation commonly used in certain Hindu traditions, functioning as a standalone phrase.
+2025-09-19 10:20:36 | INFO     | main:handle_message:954 - Classifying message: Radhe radhee...
+2025-09-19 10:20:41 | INFO     | main:classify_message_with_gemini:694 - Message classified as: General|Greeting | Lang: hi:Devanagari | Conf: HIGH
+2025-09-19 10:20:41 | INFO     | main:handle_message:1047 - Request 6ccd9f2a-01e9-446c-a037-f7aac54b1c6f processed in 8171ms.
+2025-09-19 10:21:15 | INFO     | main:classify_message_completeness:1239 - Message completeness check: full - This message expresses a complete intention and specifies the donation amount, making it a self-contained statement.
+2025-09-19 10:21:15 | INFO     | main:handle_message:954 - Classifying message: i want to donate 50000...
+2025-09-19 10:21:17 | INFO     | main:classify_message_with_gemini:694 - Message classified as: Donation Related Enquiries|Unknown | Lang: en:Latin | Conf: HIGH
+2025-09-19 10:21:57 | INFO     | main:classify_message_completeness:1239 - Message completeness check: full - This is a common greeting or invocation in certain cultures and religions, functioning as a complete expression similar to 'Hello' or 'Greetings'.
+2025-09-19 10:21:57 | INFO     | main:handle_message:954 - Classifying message: jai narayan...
+2025-09-19 10:22:01 | INFO     | main:classify_message_with_gemini:694 - Message classified as: General|Greeting | Lang: hi:Latin | Conf: HIGH
+2025-09-19 10:22:01 | INFO     | main:handle_message:1047 - Request c0327aab-07b2-467b-a8a3-598c4c6896f6 processed in 6480ms.
+2025-09-19 10:22:47 | INFO     | main:classify_message_completeness:1239 - Message completeness check: full - This sequence of emojis serves as a complete, non-verbal expression of gratitude, prayer, or a plea, similar to a standalone interjection or a short, complete statement.
+2025-09-19 10:22:47 | INFO     | main:handle_message:954 - Classifying message: 🙏🙏🙏🙏...
+2025-09-19 10:22:51 | INFO     | main:classify_message_with_gemini:694 - Message classified as: General|Greeting | Lang: und:Not Applicable | Conf: HIGH
+2025-09-19 10:22:51 | INFO     | main:handle_message:1047 - Request 6719fec0-9928-4694-946a-00dcccc18236 processed in 6760ms.
+2025-09-19 10:29:15 | INFO     | main:classify_message_completeness:1239 - Message completeness check: full - This is a complete statement expressing intent to donate a specific amount.
+2025-09-19 10:29:15 | INFO     | main:handle_message:954 - Classifying message: i want to donate rs.5000...
+2025-09-19 10:29:17 | INFO     | main:classify_message_with_gemini:694 - Message classified as: Donation Related Enquiries|Unknown | Lang: en:Latin | Conf: HIGH
+2025-09-19 10:41:51 | INFO     | main:lifespan:720 - Starting FastAPI app on port 10000
+2025-09-19 10:41:51 | WARNING  | main:get_supabase_client:70 - Using anon key - ensure RLS policies allow inserts
+2025-09-19 10:41:51 | INFO     | main:lifespan:724 - Supabase Configuration: ✓ Set
+2025-09-19 10:41:51 | INFO     | main:get_gemini_model:88 - Gemini model initialized successfully
+2025-09-19 10:41:51 | INFO     | main:lifespan:732 - Gemini AI Configuration: ✓ Set
+2025-09-19 10:42:01 | INFO     | main:classify_message_completeness:1246 - Message completeness check: full - This is a complete statement expressing an intent and a specific amount, making it a standalone thought.
+2025-09-19 10:42:01 | INFO     | main:handle_message:961 - Classifying message: i want to donate rs.5000...
+2025-09-19 10:42:06 | INFO     | main:classify_message_with_gemini:701 - Message classified as: Donation Related Enquiries|Unknown | Lang: en:Latin | Conf: HIGH
+2025-09-19 10:46:12 | INFO     | main:lifespan:740 - Application shutdown complete
+2025-09-19 10:46:18 | INFO     | main:lifespan:704 - Starting FastAPI app on port 10000
+2025-09-19 10:46:18 | WARNING  | main:get_supabase_client:70 - Using anon key - ensure RLS policies allow inserts
+2025-09-19 10:46:19 | INFO     | main:lifespan:708 - Supabase Configuration: ✓ Set
+2025-09-19 10:46:19 | INFO     | main:get_gemini_model:88 - Gemini model initialized successfully
+2025-09-19 10:46:19 | INFO     | main:lifespan:716 - Gemini AI Configuration: ✓ Set
+2025-09-19 10:46:25 | INFO     | main:classify_message_completeness:1230 - Message completeness check: full - The message expresses a complete intention to donate a specific amount, making it a standalone statement.
+2025-09-19 10:46:25 | INFO     | main:handle_message:945 - Classifying message: i want to donate rs.5000...
+2025-09-19 10:46:27 | INFO     | main:classify_message_with_gemini:685 - Message classified as: Donation Related Enquiries|Announce Related | Lang: en:Latin | Conf: HIGH
+2025-09-19 10:46:27 | ERROR    | main:handle_message:1060 - Request a368705d-fd50-4feb-a21c-c36ff4f11c16 failed after 5893ms: handle_faq() got an unexpected keyword argument 'message_text'
+2025-09-19 10:49:39 | INFO     | main:lifespan:724 - Application shutdown complete
+2025-09-19 10:49:46 | INFO     | main:lifespan:710 - Starting FastAPI app on port 10000
+2025-09-19 10:49:46 | WARNING  | main:get_supabase_client:70 - Using anon key - ensure RLS policies allow inserts
+2025-09-19 10:49:46 | INFO     | main:lifespan:714 - Supabase Configuration: ✓ Set
+2025-09-19 10:49:46 | INFO     | main:get_gemini_model:88 - Gemini model initialized successfully
+2025-09-19 10:49:46 | INFO     | main:lifespan:722 - Gemini AI Configuration: ✓ Set
+2025-09-19 10:49:53 | INFO     | main:classify_message_completeness:1236 - Message completeness check: full - This is a complete statement expressing an intention with a specific amount. It doesn't require further context to understand the core message.
+2025-09-19 10:49:53 | INFO     | main:handle_message:951 - Classifying message: i want to donate rs.5000...
+2025-09-19 10:49:59 | INFO     | main:classify_message_with_gemini:691 - Message classified as: Donation Related Enquiries|Unknown | Lang: en:Latin | Conf: HIGH
+2025-09-19 10:52:32 | INFO     | main:lifespan:730 - Application shutdown complete
+2025-09-19 10:56:02 | INFO     | main:lifespan:705 - Starting FastAPI app on port 10000
+2025-09-19 10:56:02 | WARNING  | main:get_supabase_client:70 - Using anon key - ensure RLS policies allow inserts
+2025-09-19 10:56:03 | INFO     | main:lifespan:709 - Supabase Configuration: ✓ Set
+2025-09-19 10:56:03 | INFO     | main:get_gemini_model:88 - Gemini model initialized successfully
+2025-09-19 10:56:03 | INFO     | main:lifespan:717 - Gemini AI Configuration: ✓ Set
+2025-09-19 10:56:10 | INFO     | main:classify_message_completeness:1233 - Message completeness check: full - The message expresses a complete intention to donate a specific amount, making it a standalone statement.
+2025-09-19 10:56:10 | INFO     | main:handle_message:946 - Classifying message: i want to donate rs.5000...
+2025-09-19 10:56:17 | INFO     | main:classify_message_with_gemini:686 - Message classified as: Donation Related Enquiries|Unknown | Lang: en:Latin | Conf: HIGH
+2025-09-19 10:59:32 | INFO     | main:lifespan:725 - Application shutdown complete
+2025-09-19 10:59:39 | INFO     | main:lifespan:705 - Starting FastAPI app on port 10000
+2025-09-19 10:59:39 | WARNING  | main:get_supabase_client:70 - Using anon key - ensure RLS policies allow inserts
+2025-09-19 10:59:40 | INFO     | main:lifespan:709 - Supabase Configuration: ✓ Set
+2025-09-19 10:59:40 | INFO     | main:get_gemini_model:88 - Gemini model initialized successfully
+2025-09-19 10:59:40 | INFO     | main:lifespan:717 - Gemini AI Configuration: ✓ Set
+2025-09-19 10:59:55 | INFO     | main:classify_message_completeness:1233 - Message completeness check: full - This is a complete sentence expressing an intention and a specific amount. It doesn't require further context to be understood.
+2025-09-19 10:59:55 | INFO     | main:handle_message:946 - Classifying message: i want to donate rs.5000...
+2025-09-19 11:00:00 | INFO     | main:classify_message_with_gemini:686 - Message classified as: Donation Related Enquiries|Announce Related | Lang: en:Latin | Conf: HIGH
+2025-09-19 11:00:00 | ERROR    | main:handle_message:1063 - Request d71c978c-3338-4773-ab3c-b286b488fd9e failed after 9307ms: 'question'
+2025-09-19 11:02:24 | INFO     | main:lifespan:725 - Application shutdown complete
