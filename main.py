@@ -968,7 +968,7 @@ async def handle_message(request: MessageRequest):
                     "status": "success",
                     "processing_end_time": end_time,
                     "processing_duration_ms": duration_ms,
-                    "response_phone_number": response_data["phone_number"],
+                    "response_phone_number": response_data["mobile_no"],
                     "response_ai_response": response_data["ai_response"],
                     "response_ai_reason": response_data["ai_reason"],
                     "raw_response": response_data,
@@ -976,7 +976,7 @@ async def handle_message(request: MessageRequest):
                 })
                 asyncio.create_task(log_to_supabase(log_data))
                 return MessageResponse(
-                    phone_number=response_data["phone_number"],
+                    phone_number=response_data["mobile_no"],
                     ai_response=response_data["ai_response"],
                     ai_reason=response_data["ai_reason"],
                     WA_Auto_Id=request.WA_Auto_Id,
@@ -1029,7 +1029,7 @@ async def handle_message(request: MessageRequest):
             "status": "success",
             "processing_end_time": end_time,
             "processing_duration_ms": duration_ms,
-            "response_phone_number": response_data.get("phone_number"),
+            "response_phone_number": response_data.get("mobile_no"),
             "response_ai_response": response_data.get("ai_response"),
             "response_ai_reason": response_data.get("ai_reason"),
             "response_wa_auto_id": response_data.get("WA_Auto_Id"),
@@ -1042,7 +1042,7 @@ async def handle_message(request: MessageRequest):
         logger.info(f"Request {request_id} processed in {duration_ms}ms.")
 
         return MessageResponse(
-            phone_number=response_data.get("phone_number", phone_number),
+            phone_number=response_data.get("mobile_no", phone_number),
             ai_response=response_data.get("ai_response", "Error generating response."),
             ai_reason=response_data.get("ai_reason", "N/A"),
             WA_Auto_Id=response_data.get("WA_Auto_Id"),
@@ -1387,7 +1387,7 @@ async def process_messages():
         for msg in messages_data:
             msg_id = msg["id"]
             user_text = msg["wa_msg_text"]
-            phone_number = msg["phone_number"]
+            phone_number = msg["mobile_no"]
             wa_msg_id = msg["WA_Message_Id"]
 
             # 🔑 Use your existing pipeline function for classification + response
