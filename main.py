@@ -1362,7 +1362,7 @@ async def handle_greeting(
         "ai_sub_classification": ai_sub_classification,
     }
 
-
+@app.post("/process-messages")
 async def process_messages():
     """
     Fetch all messages where ai_response = 'Not Answerable', re-run classification + response using existing pipeline, and update Supabase with new results.
@@ -1372,7 +1372,7 @@ async def process_messages():
         # 1. Fetch unprocessed messages
         response = supabase.table("message_logs") \
             .select("id, wa_msg_text, phone_number, WA_Message_Id") \
-            .is_("ai_response", None) \
+            .is_("ai_response", 'Not Answerable') \
             .execute()
 
         messages_data = response.data
