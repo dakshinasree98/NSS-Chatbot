@@ -1372,7 +1372,7 @@ async def process_messages():
         # 1. Fetch unprocessed messages
         response = supabase.table("message_logs") \
             .select("id, wa_msg_text, phone_number, WA_Message_Id") \
-            .is_("ai_response", 'Not Answerable') \
+            .eq("ai_response", "Not Answerable") \
             .execute()
 
         messages_data = response.data
@@ -1399,11 +1399,11 @@ async def process_messages():
             )
 
             # 3. Update back into Supabase
-            supabase.table("message_logs") \
+            update_result = supabase.table("message_logs") \
                 .update({
-                    "ai_response": response_data.get("ai_response"),
-                    "ai_classification": response_data.get("ai_classification"),
-                    "ai_reason": response_data.get("ai_reason"),
+                    "ai_response": response_data.ai_response,
+                    "ai_classification": getattr(response_data, "ai_classification", None),
+                    "ai_reason": response_data.ai_reason,
                 }) \
                 .eq("id", msg_id) \
                 .execute()
