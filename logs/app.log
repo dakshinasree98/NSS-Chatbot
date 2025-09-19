@@ -329,3 +329,8 @@
 2025-09-19 11:02:46 | INFO     | main:classify_message_with_gemini:686 - Message classified as: Donation Related Enquiries|Announce Related | Lang: en:Latin | Conf: HIGH
 2025-09-19 11:02:46 | INFO     | main:handle_message:1041 - Request 8f991303-92ba-4cf4-8175-5239072aabd5 processed in 9652ms.
 2025-09-19 14:33:24 | INFO     | main:lifespan:725 - Application shutdown complete
+2025-09-19 14:33:43 | INFO     | main:lifespan:706 - Starting FastAPI app on port 10000
+2025-09-19 14:33:43 | WARNING  | main:get_supabase_client:70 - Using anon key - ensure RLS policies allow inserts
+2025-09-19 14:33:43 | INFO     | main:lifespan:710 - Supabase Configuration: ✓ Set
+2025-09-19 14:33:43 | INFO     | main:get_gemini_model:89 - Gemini model initialized successfully
+2025-09-19 14:33:43 | INFO     | main:lifespan:718 - Gemini AI Configuration: ✓ Set
