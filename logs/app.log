@@ -334,3 +334,4 @@
 2025-09-19 14:33:43 | INFO     | main:lifespan:710 - Supabase Configuration: ✓ Set
 2025-09-19 14:33:43 | INFO     | main:get_gemini_model:89 - Gemini model initialized successfully
 2025-09-19 14:33:43 | INFO     | main:lifespan:718 - Gemini AI Configuration: ✓ Set
+2025-09-19 15:32:36 | INFO     | main:lifespan:726 - Application shutdown complete
