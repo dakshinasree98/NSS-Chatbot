@@ -791,7 +791,7 @@ class MessageRequest(BaseModel):
     WA_Msg_Text: Optional[str] = None
     WA_Msg_Type: Optional[str] = None
     Integration_Type: Optional[str] = None
-    WA_Message_Id: Optional[str] = None
+    wa_message_id: Optional[str] = None
     WA_Url: Optional[str] = None
     Status: Optional[str] = "success"
     Donor_Name: Optional[str] = None
@@ -801,7 +801,7 @@ class MessageResponse(BaseModel):
     ai_response: str
     ai_reason: str
     WA_Auto_Id: Optional[int] = None
-    WA_Message_Id: Optional[str] = None
+    wa_message_id: Optional[str] = None
 
 class HealthResponse(BaseModel):
     status: str
@@ -888,13 +888,13 @@ async def handle_message(request: MessageRequest):
         "wa_msg_text": request.WA_Msg_Text,
         "wa_msg_type": request.WA_Msg_Type,
         "integration_type": request.Integration_Type,
-        "wa_message_id": request.WA_Message_Id,
+        "wa_message_id": request.wa_message_id,
         "wa_url": request.WA_Url,
         "status": request.Status,
         "message_length": len(request.WA_Msg_Text) if request.WA_Msg_Text else 0,
         "parameters_received": len([k for k,v in payload.items() if v is not None]),
         "includes_wa_auto_id": request.WA_Auto_Id is not None,
-        "includes_wa_message_id": request.WA_Message_Id is not None,
+        "includes_wa_message_id": request.wa_message_id is not None,
         "donor_name" : request.Donor_Name,
         "transcription": None,  # Initialize transcription field
         "ai_classification": None,
@@ -916,7 +916,7 @@ async def handle_message(request: MessageRequest):
 
         # --- Step 2: Fetch history and consolidate if partial ---
         if completeness_check.completeness == "partial" and request.MobileNo and gemini_model:
-            previous_messages = await fetch_previous_messages(request.MobileNo, request.WA_Message_Id, limit=10)
+            previous_messages = await fetch_previous_messages(request.MobileNo, request.wa_message_id, limit=10)
             if previous_messages:
                 # Combine previous messages with the current one
                 # Simple join, could be more sophisticated (e.g., using a specific delimiter)
@@ -980,7 +980,7 @@ async def handle_message(request: MessageRequest):
                     ai_response=response_data["ai_response"],
                     ai_reason=response_data["ai_reason"],
                     WA_Auto_Id=request.WA_Auto_Id,
-                    WA_Message_Id=request.WA_Message_Id,
+                    wa_message_id=request.wa_message_id,
                 )
         else:
             combined_classification = "General Information Enquiries|Unknown"
@@ -1019,8 +1019,8 @@ async def handle_message(request: MessageRequest):
         # Attach WA IDs
         if request.WA_Auto_Id is not None:
             response_data["WA_Auto_Id"] = request.WA_Auto_Id
-        if request.WA_Message_Id is not None:
-            response_data["WA_Message_Id"] = request.WA_Message_Id
+        if request.wa_message_id is not None:
+            response_data["wa_message_id"] = request.wa_message_id
 
         # --- Finalize logs ---
         end_time = datetime.now(timezone.utc)
@@ -1033,7 +1033,7 @@ async def handle_message(request: MessageRequest):
             "response_ai_response": response_data.get("ai_response"),
             "response_ai_reason": response_data.get("ai_reason"),
             "response_wa_auto_id": response_data.get("WA_Auto_Id"),
-            "response_wa_message_id": response_data.get("WA_Message_Id"),
+            "response_wa_message_id": response_data.get("wa_message_id"),
             "raw_response": response_data,
             "ai_classification": combined_classification,
         })
@@ -1046,7 +1046,7 @@ async def handle_message(request: MessageRequest):
             ai_response=response_data.get("ai_response", "Error generating response."),
             ai_reason=response_data.get("ai_reason", "N/A"),
             WA_Auto_Id=response_data.get("WA_Auto_Id"),
-            WA_Message_Id=response_data.get("WA_Message_Id"),
+            wa_message_id=response_data.get("wa_message_id"),
         )
 
     except Exception as e:
@@ -1371,7 +1371,7 @@ async def process_messages():
     try:
         # 1. Fetch unprocessed messages
         response = supabase.table("message_logs") \
-            .select("id, wa_msg_text, mobile_no, WA_Message_Id") \
+            .select("id, wa_msg_text, mobile_no, wa_message_id") \
             .eq("ai_response", "Not Answerable") \
             .execute()
 
@@ -1388,7 +1388,7 @@ async def process_messages():
             msg_id = msg["id"]
             user_text = msg["wa_msg_text"]
             mobile_no = msg["mobile_no"]
-            wa_msg_id = msg["WA_Message_Id"]
+            wa_msg_id = msg["wa_message_id"]
 
             # 🔑 Use your existing pipeline function for classification + response
             # If you already have a function like handle_user_message, reuse it here
