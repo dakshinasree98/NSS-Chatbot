@@ -797,7 +797,7 @@ class MessageRequest(BaseModel):
     Donor_Name: Optional[str] = None
 
 class MessageResponse(BaseModel):
-    phone_number: str
+    mobile_no: str
     ai_response: str
     ai_reason: str
     WA_Auto_Id: Optional[int] = None
@@ -866,7 +866,7 @@ async def forward_message_to_replica(payload: dict):
 async def handle_message(request: MessageRequest):
     request_id = str(uuid.uuid4())
     start_time = datetime.now(timezone.utc)
-    phone_number = request.MobileNo or request.WA_Msg_To or "Unknown"
+    mobile_no = request.MobileNo or request.WA_Msg_To or "Unknown"
     payload = request.model_dump(exclude_none=True)
     # asyncio.create_task(forward_message_to_replica(payload))
     
@@ -883,7 +883,7 @@ async def handle_message(request: MessageRequest):
         "wa_received_at": request.WA_Received_At,
         "ng_code": request.NGCode,
         "wa_name": request.Wa_Name,
-        "mobile_no": phone_number,
+        "mobile_no": mobile_no,
         "wa_msg_to": request.WA_Msg_To,
         "wa_msg_text": request.WA_Msg_Text,
         "wa_msg_type": request.WA_Msg_Type,
@@ -922,9 +922,9 @@ async def handle_message(request: MessageRequest):
                 # Simple join, could be more sophisticated (e.g., using a specific delimiter)
                 consolidated_text = "\n".join(previous_messages) + "\n" + request.WA_Msg_Text
                 final_message_to_classify = consolidated_text
-                logger.info(f"Consolidated {len(previous_messages)} previous messages with current message for {phone_number}")
+                logger.info(f"Consolidated {len(previous_messages)} previous messages with current message for {mobile_no}")
             else:
-                logger.warning(f"Message marked as partial, but could not fetch previous messages for {phone_number}. Classifying current message only.")
+                logger.warning(f"Message marked as partial, but could not fetch previous messages for {mobile_no}. Classifying current message only.")
                 final_message_to_classify = request.WA_Msg_Text # Fallback to classifying current message
         else:
             final_message_to_classify = request.WA_Msg_Text
@@ -932,7 +932,7 @@ async def handle_message(request: MessageRequest):
 
         # --- Step 3: Handle Images ---
         if request.WA_Msg_Type and request.WA_Msg_Type.lower() == "image" and request.WA_Url:
-            logger.info(f"Received an image message from {phone_number}. Assigning placeholder classification.")
+            logger.info(f"Received an image message from {mobile_no}. Assigning placeholder classification.")
             # If you want to process image content, integrate analyze_image_with_gemini here.
             # For now, we assign a placeholder and skip text classification.
             classification_result = {
@@ -955,7 +955,7 @@ async def handle_message(request: MessageRequest):
 
             if combined_classification.endswith("Unknown"):
                 response_data = {
-                    "phone_number": phone_number,
+                    "mobile_no": mobile_no,
                     "ai_response": "Sorry, I didn’t understand your query properly. Can you rephrase the question or add more information?",
                     "ai_reason": "Classification failed even after consolidating previous messages",
                     "ai_classification": "General Information Enquiries|Unknown",
@@ -968,7 +968,7 @@ async def handle_message(request: MessageRequest):
                     "status": "success",
                     "processing_end_time": end_time,
                     "processing_duration_ms": duration_ms,
-                    "response_phone_number": response_data["mobile_no"],
+                    "response_mobile_no": response_data["mobile_no"],
                     "response_ai_response": response_data["ai_response"],
                     "response_ai_reason": response_data["ai_reason"],
                     "raw_response": response_data,
@@ -976,7 +976,7 @@ async def handle_message(request: MessageRequest):
                 })
                 asyncio.create_task(log_to_supabase(log_data))
                 return MessageResponse(
-                    phone_number=response_data["mobile_no"],
+                    mobile_no=response_data["mobile_no"],
                     ai_response=response_data["ai_response"],
                     ai_reason=response_data["ai_reason"],
                     WA_Auto_Id=request.WA_Auto_Id,
@@ -994,14 +994,14 @@ async def handle_message(request: MessageRequest):
                 message_text=final_message_to_classify,
                 user_name=request.Wa_Name or request.Donor_Name or "Sevak",
                 classification_result={"classification": combined_classification},
-                phone_number=phone_number
+                mobile_no=mobile_no
             )
 
 
         else:
             answer = await handle_faq(final_message_to_classify)
             response_data = {
-                "phone_number": phone_number,
+                "mobile_no": mobile_no,
                 "ai_response": answer,
                 "ai_reason": f"FAQ answer for classification {combined_classification}",
                 "ai_classification": combined_classification,
@@ -1010,7 +1010,7 @@ async def handle_message(request: MessageRequest):
 
             if not response_data or not response_data.get("ai_response"):
                 response_data = {
-                    "phone_number": phone_number,
+                    "mobile_no": mobile_no,
                     "ai_response": "Sorry, I don’t have that answer.",
                     "ai_reason": f"No FAQ match found for: {combined_classification}",
                     "ai_classification": combined_classification,
@@ -1029,7 +1029,7 @@ async def handle_message(request: MessageRequest):
             "status": "success",
             "processing_end_time": end_time,
             "processing_duration_ms": duration_ms,
-            "response_phone_number": response_data.get("mobile_no"),
+            "response_mobile_no": response_data.get("mobile_no"),
             "response_ai_response": response_data.get("ai_response"),
             "response_ai_reason": response_data.get("ai_reason"),
             "response_wa_auto_id": response_data.get("WA_Auto_Id"),
@@ -1042,7 +1042,7 @@ async def handle_message(request: MessageRequest):
         logger.info(f"Request {request_id} processed in {duration_ms}ms.")
 
         return MessageResponse(
-            phone_number=response_data.get("mobile_no", phone_number),
+            mobile_no=response_data.get("mobile_no", mobile_no),
             ai_response=response_data.get("ai_response", "Error generating response."),
             ai_reason=response_data.get("ai_reason", "N/A"),
             WA_Auto_Id=response_data.get("WA_Auto_Id"),
@@ -1087,7 +1087,7 @@ async def get_categories():
 async def classify_only(request: dict):
     """Standalone classification endpoint for testing"""
     message = request.get("WA_Msg_Text", "")
-    phone_number = request.get("MobileNo", "Unknown")
+    mobile_no = request.get("MobileNo", "Unknown")
     is_partial_check_needed = request.get("check_completeness", False) # Option to test completeness check
     if not gemini_model:
         raise HTTPException(status_code=503, detail="Gemini AI not available")
@@ -1097,8 +1097,8 @@ async def classify_only(request: dict):
             "message_completeness": completeness_result.completeness,
             "completeness_reasoning": completeness_result.reasoning
         }
-        if completeness_result.completeness == "partial" and phone_number != "Unknown":
-            previous_messages = await fetch_previous_messages(phone_number)
+        if completeness_result.completeness == "partial" and mobile_no != "Unknown":
+            previous_messages = await fetch_previous_messages(mobile_no)
             if previous_messages:
                 consolidated_message = "\n".join(previous_messages) + "\n" + message
                 classification_result["consolidated_message"] = consolidated_message
@@ -1288,7 +1288,7 @@ async def handle_greeting(
     message_text: Optional[str],
     user_name: str,
     classification_result: Dict[str, Any],
-    phone_number: str
+    mobile_no: str
 ) -> Dict[str, Any]:
     """
     Return a response that mirrors the user's greeting and includes the user's name
@@ -1355,7 +1355,7 @@ async def handle_greeting(
     ai_response = f"{greeting_with_name} How can I assist you today?"
 
     return {
-        "phone_number": phone_number,
+        "mobile_no": mobile_no,
         "ai_response": ai_response,
         "ai_reason": ai_reason,
         "ai_classification": ai_classification,
@@ -1371,7 +1371,7 @@ async def process_messages():
     try:
         # 1. Fetch unprocessed messages
         response = supabase.table("message_logs") \
-            .select("id, wa_msg_text, phone_number, WA_Message_Id") \
+            .select("id, wa_msg_text, mobile_no, WA_Message_Id") \
             .eq("ai_response", "Not Answerable") \
             .execute()
 
@@ -1387,13 +1387,13 @@ async def process_messages():
         for msg in messages_data:
             msg_id = msg["id"]
             user_text = msg["wa_msg_text"]
-            phone_number = msg["mobile_no"]
+            mobile_no = msg["mobile_no"]
             wa_msg_id = msg["WA_Message_Id"]
 
             # 🔑 Use your existing pipeline function for classification + response
             # If you already have a function like handle_user_message, reuse it here
             response_data = await handle_message(
-                phone_number=phone_number,
+                mobile_no=mobile_no,
                 user_message=user_text,
                 wa_msg_id=wa_msg_id
             )
